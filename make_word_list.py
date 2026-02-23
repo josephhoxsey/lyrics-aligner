@@ -32,21 +32,25 @@ for file in lyrics_files:
             for word in words:
                 unique_words.add(word)
 
-unique_words.remove('')
+unique_words.discard('')
 
 # create .txt-file
-word_file_path = 'files/{}_word_list.txt'.format(args.dataset_name)
-assert not os.path.isfile(word_file_path), 'file {} exists already. Delete or choose different' \
-                                           ' file to avoid appending to existing file'.format(word_file_path)
+word_file_path = f"files/{args.dataset_name}_word_list.txt"
+if os.path.isfile(word_file_path):
+    response = input(f"{word_file_path} already exist. Overwrite? (y/n)")
+    if "y" in response:
+        os.remove(word_file_path)
+    else:
+        exit()
 
 # write words in .txt-file
-words_file = open(word_file_path, 'a')
+words_file = open(word_file_path, 'w')
 for word in sorted(unique_words):
     words_file.write(word + '\n')
 words_file.close()
 
 # create empty .txt-file which will contain the output of the CMU pronuciation dictionary.
-empty_file_path =  'files/{}_word2phonemes.txt'.format(args.dataset_name)
-empty_file = open(empty_file_path, 'a')
+empty_file_path =  f"files/{args.dataset_name}_word2phonemes.txt"
+empty_file = open(empty_file_path, 'w')
 empty_file.write('')
 empty_file.close()
