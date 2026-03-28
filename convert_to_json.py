@@ -39,7 +39,8 @@ def convert_onsets_to_json(input_path, output_path=None):
 
     # Determine output path
     if output_path is None:
-        output_path = input_path.replace('_word_onsets.txt', '.json')
+        base, ext = os.path.splitext(input_path)
+        output_path = base + '.json'
     
     # Create output directory if it doesn't exist
     output_dir = os.path.dirname(output_path)
